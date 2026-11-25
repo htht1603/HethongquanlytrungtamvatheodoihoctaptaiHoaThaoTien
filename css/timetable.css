@@ -1,0 +1,214 @@
+/* --- Specific styles for Timetable Management --- */
+
+/* View Switcher */
+.view-container {
+    display: none;
+    height: 100%;
+}
+.view-container.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Calendar Header Tools */
+.cal-tools {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 16px 24px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px 8px 0 0;
+    border-bottom: none;
+}
+.cal-nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-weight: 600;
+}
+.cal-nav-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    padding: 4px;
+}
+.cal-nav-btn:hover { background: #f1f5f9; color: var(--text-main); }
+.cal-today-btn {
+    border: 1px solid var(--border-color);
+    background: white;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+.cal-today-btn:hover { background: #f8fafc; }
+
+/* Calendar Grid */
+.calendar-grid {
+    display: grid;
+    /* 1 col for time, 6 cols for days (Mon-Sat, based on mockup T2-T7 maybe?) The mockup shows T2, T3, T4, T5, T6. I'll make it T2->T7 */
+    grid-template-columns: 80px repeat(6, 1fr);
+    background: var(--border-color);
+    gap: 1px;
+    border: 1px solid var(--border-color);
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
+}
+
+.cal-cell {
+    background: white;
+    min-height: 100px;
+    padding: 8px;
+    position: relative;
+}
+
+/* Header Cells */
+.cal-header-cell {
+    background: #f8fafc;
+    text-align: center;
+    padding: 16px 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    min-height: auto;
+}
+.cal-header-date {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-top: 4px;
+}
+
+/* Time Cells (Left Column) */
+.cal-time-cell {
+    background: #f8fafc;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-main);
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+.cal-time-cell span {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 400;
+}
+
+/* Class Card */
+.tkb-card {
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+.tkb-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.tkb-title { font-weight: 700; margin-bottom: 2px; }
+.tkb-teacher { color: rgba(0,0,0,0.6); margin-bottom: 2px; }
+.tkb-room { font-weight: 500; color: rgba(0,0,0,0.5); font-size: 0.75rem; }
+
+/* Color Themes */
+.theme-blue { background-color: #e0f2fe; color: #0369a1; }
+.theme-green { background-color: #dcfce7; color: #15803d; }
+.theme-orange { background-color: #ffedd5; color: #c2410c; }
+.theme-purple { background-color: #f3e8ff; color: #7e22ce; }
+.theme-pink { background-color: #fce7f3; color: #be185d; }
+.theme-yellow { background-color: #fef9c3; color: #a16207; }
+
+/* View Switch Button (Top Nav) */
+.view-switch {
+    display: flex;
+    background: #f1f5f9;
+    border-radius: 6px;
+    padding: 4px;
+}
+.vs-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border: none;
+    background: transparent;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+.vs-btn.active {
+    background: white;
+    color: var(--primary-color);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* Create Form Specifics */
+.class-preview-card {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-top: 16px;
+    background: #f8fafc;
+}
+.cp-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.cp-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cp-icon.blue { background: #e0f2fe; color: #0284c7; }
+.cp-icon.purple { background: #f3e8ff; color: #9333ea; }
+.cp-icon.green { background: #dcfce7; color: #16a34a; }
+.cp-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 2px;}
+.cp-value { font-weight: 600; font-size: 0.95rem; }
+
+/* Detail Panel */
+.dp-meta {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+.dp-icon {
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+.dp-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+.dp-value {
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--text-main);
+}

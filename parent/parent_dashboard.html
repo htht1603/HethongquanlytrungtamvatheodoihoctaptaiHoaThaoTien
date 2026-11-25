@@ -1,0 +1,674 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tổng quan - Phụ huynh | Học Thân Thiện</title>
+    <meta name="description" content="Theo dõi tình hình học tập của bé — Hệ thống quản lý học Thân Thiện">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f0f4f8;
+        color: #334155;
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+        width: 230px;
+        flex-shrink: 0;
+        background: linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%);
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+    }
+    .sidebar-header {
+        padding: 22px 20px 18px;
+        display: flex; align-items: center; gap: 12px;
+        border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .sidebar-logo-icon {
+        width: 40px; height: 40px; border-radius: 10px;
+        background: white;
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+    }
+    .sidebar-logo-text h2 { font-size: 0.9rem; font-weight: 700; color: white; line-height: 1.2; }
+    .sidebar-logo-text p { font-size: 0.72rem; color: rgba(255,255,255,.6); font-weight: 500; }
+
+    .sidebar-nav { flex: 1; padding: 20px 12px; overflow-y: auto; }
+    .nav-label {
+        font-size: 0.68rem; font-weight: 700; color: rgba(255,255,255,.4);
+        text-transform: uppercase; letter-spacing: 1px;
+        padding: 0 8px; margin-bottom: 8px; margin-top: 16px;
+    }
+    .nav-label:first-child { margin-top: 0; }
+    .nav-item {
+        display: flex; align-items: center; gap: 12px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        color: rgba(255,255,255,.7);
+        text-decoration: none;
+        font-size: 0.88rem; font-weight: 500;
+        transition: all .2s;
+        margin-bottom: 3px;
+        cursor: pointer;
+    }
+    .nav-item:hover { background: rgba(255,255,255,.1); color: white; }
+    .nav-item.active {
+        background: rgba(255,255,255,.18);
+        color: white; font-weight: 600;
+        box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    }
+    .nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .nav-badge {
+        margin-left: auto;
+        background: #ef4444;
+        color: white;
+        font-size: 0.68rem; font-weight: 700;
+        padding: 2px 7px; border-radius: 99px;
+        min-width: 20px; text-align: center;
+    }
+
+    .sidebar-footer { padding: 16px 12px 20px; border-top: 1px solid rgba(255,255,255,.1); }
+    .logout-item {
+        display: flex; align-items: center; gap: 10px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        color: rgba(255,255,255,.6);
+        font-size: 0.75rem; font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all .2s;
+    }
+    .logout-item:hover { background: rgba(255,255,255,.08); color: rgba(255,255,255,.9); }
+    .logout-item svg { width: 16px; height: 16px; }
+
+    /* ===== MAIN ===== */
+    .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    /* TOP NAV */
+    .top-nav {
+        background: white;
+        padding: 0 28px;
+        height: 64px;
+        display: flex; align-items: center; justify-content: space-between;
+        border-bottom: 1px solid #e2e8f0;
+        flex-shrink: 0;
+    }
+    .nav-left { display: flex; align-items: center; gap: 14px; }
+    .nav-page-title { font-size: 1rem; font-weight: 600; color: #334155; }
+    .nav-right { display: flex; align-items: center; gap: 14px; }
+    .parent-info {
+        text-align: right;
+    }
+    .parent-info .parent-name { font-size: 0.88rem; font-weight: 700; color: #1e293b; }
+    .parent-info .parent-role { font-size: 0.75rem; color: #64748b; font-weight: 500; }
+    .parent-avatar {
+        width: 38px; height: 38px; border-radius: 50%;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        display: flex; align-items: center; justify-content: center;
+        color: white; font-weight: 700; font-size: 0.85rem;
+        flex-shrink: 0;
+        border: 2px solid #dbeafe;
+    }
+    .icon-btn {
+        width: 36px; height: 36px; border-radius: 9px;
+        border: 1.5px solid #e2e8f0; background: white;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer; color: #64748b;
+        transition: all .15s; position: relative;
+    }
+    .icon-btn:hover { border-color: #3b82f6; color: #3b82f6; background: #eff6ff; }
+    .icon-btn svg { width: 18px; height: 18px; }
+    .notif-dot {
+        position: absolute; top: 6px; right: 6px;
+        width: 8px; height: 8px; background: #ef4444;
+        border-radius: 50%; border: 1.5px solid white;
+    }
+    .btn-contact {
+        display: flex; align-items: center; gap: 7px;
+        padding: 8px 16px; border-radius: 9px;
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white; font-size: 0.85rem; font-weight: 600;
+        border: none; cursor: pointer; font-family: inherit;
+        box-shadow: 0 3px 10px rgba(37,99,235,.25);
+        transition: all .2s;
+    }
+    .btn-contact:hover {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        box-shadow: 0 5px 15px rgba(37,99,235,.35);
+        transform: translateY(-1px);
+    }
+    .btn-contact svg { width: 15px; height: 15px; }
+
+    /* PAGE BODY */
+    .page-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+    }
+
+    /* GREETING */
+    .greeting-row {
+        display: flex; align-items: flex-start; justify-content: space-between;
+    }
+    .greeting-text h1 {
+        font-size: 1.6rem; font-weight: 800; color: #0f172a;
+        margin-bottom: 5px;
+    }
+    .greeting-text p { font-size: 0.9rem; color: #64748b; }
+
+    /* STAT CARDS */
+    .stats-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+    .stat-card {
+        background: white;
+        border-radius: 16px;
+        padding: 20px 22px;
+        display: flex; align-items: center; gap: 18px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        border: 1px solid #f1f5f9;
+        transition: transform .2s, box-shadow .2s;
+    }
+    .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,0.08); }
+    .stat-icon {
+        width: 52px; height: 52px; border-radius: 14px;
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+    }
+    .stat-icon svg { width: 26px; height: 26px; }
+    .stat-info .num { font-size: 1.75rem; font-weight: 800; color: #0f172a; line-height: 1; margin-bottom: 5px; }
+    .stat-info .num span { font-size: 1rem; font-weight: 600; color: #64748b; }
+    .stat-info .label { font-size: 0.82rem; color: #64748b; font-weight: 500; }
+    .stat-info .sublabel { font-size: 0.78rem; font-weight: 700; margin-top: 3px; }
+
+    /* MAIN GRID */
+    .main-grid {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 20px;
+        flex: 1;
+    }
+
+    /* SCHEDULE CARD */
+    .schedule-card {
+        background: white;
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        border: 1px solid #f1f5f9;
+    }
+    .card-header {
+        display: flex; align-items: center; justify-content: space-between;
+        margin-bottom: 18px;
+    }
+    .card-title {
+        font-size: 1rem; font-weight: 700; color: #1e293b;
+    }
+    .week-nav {
+        display: flex; align-items: center; gap: 8px;
+    }
+    .week-label {
+        font-size: 0.8rem; font-weight: 600; color: #64748b;
+        padding: 4px 10px; background: #f8fafc; border-radius: 6px;
+    }
+    .week-btn {
+        width: 26px; height: 26px; border-radius: 6px;
+        border: 1px solid #e2e8f0; background: white;
+        cursor: pointer; display: flex; align-items: center; justify-content: center;
+        color: #64748b; transition: all .15s;
+    }
+    .week-btn:hover { border-color: #3b82f6; color: #3b82f6; }
+
+    /* Week strip */
+    .week-strip {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+    }
+    .day-col { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .day-name {
+        font-size: 0.72rem; font-weight: 700; color: #94a3b8;
+        text-transform: uppercase;
+    }
+    .day-slot {
+        width: 100%; border-radius: 10px; padding: 8px 6px;
+        text-align: center; min-height: 68px;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+        font-size: 0.75rem;
+    }
+    .day-slot.empty {
+        background: #f8fafc;
+        color: #94a3b8;
+        font-size: 0.7rem;
+        font-weight: 500;
+        border: 1.5px dashed #e2e8f0;
+    }
+    .day-slot.lesson {
+        background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        color: #1e40af;
+        border: 1.5px solid #bfdbfe;
+    }
+    .day-slot.lesson.green { background: linear-gradient(135deg, #dcfce7, #bbf7d0); color: #166534; border-color: #bbf7d0; }
+    .day-slot.lesson.purple { background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6; border-color: #ddd6fe; }
+    .day-slot.lesson.orange { background: linear-gradient(135deg, #ffedd5, #fed7aa); color: #9a3412; border-color: #fed7aa; }
+    .day-slot.lesson.today { box-shadow: 0 0 0 2px #3b82f6; }
+    .day-slot .s-class { font-weight: 700; font-size: 0.8rem; }
+    .day-slot .s-time { font-size: 0.68rem; opacity: .8; }
+    .day-slot .s-room { font-size: 0.68rem; font-weight: 600; }
+
+    /* Achievement Banner */
+    .achievement-banner {
+        border-radius: 14px;
+        overflow: hidden;
+        position: relative;
+        height: 175px;
+        background: #1e293b;
+    }
+    .achievement-banner img {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        opacity: .75;
+    }
+    .achievement-overlay {
+        position: absolute; inset: 0;
+        background: linear-gradient(90deg, rgba(15,23,42,.85) 0%, rgba(15,23,42,.3) 100%);
+        padding: 22px 24px;
+        display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .achieve-tag {
+        display: inline-flex; align-items: center; gap: 6px;
+        background: rgba(59,130,246,.85);
+        color: white; font-size: 0.72rem; font-weight: 700;
+        padding: 4px 10px; border-radius: 6px;
+        width: fit-content; margin-bottom: 8px;
+    }
+    .achieve-tag svg { width: 13px; height: 13px; }
+    .achievement-banner h2 { font-size: 1.2rem; font-weight: 800; color: white; margin-bottom: 5px; }
+    .achievement-banner p { font-size: 0.8rem; color: rgba(255,255,255,.7); line-height: 1.4; max-width: 360px; }
+
+    /* ACTIVITY FEED */
+    .activity-card {
+        background: white;
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        border: 1px solid #f1f5f9;
+        display: flex; flex-direction: column;
+    }
+    .activity-list { display: flex; flex-direction: column; gap: 0; flex: 1; }
+    .activity-item {
+        display: flex; gap: 12px;
+        padding: 12px 0;
+        border-bottom: 1px solid #f8fafc;
+        position: relative;
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .act-dot {
+        width: 32px; height: 32px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0; margin-top: 1px;
+    }
+    .act-dot svg { width: 15px; height: 15px; }
+    .act-body { flex: 1; }
+    .act-title { font-size: 0.85rem; font-weight: 600; color: #1e293b; margin-bottom: 3px; }
+    .act-sub { font-size: 0.78rem; color: #64748b; margin-bottom: 2px; }
+    .act-time { font-size: 0.72rem; color: #94a3b8; }
+    .act-link {
+        font-size: 0.8rem; font-weight: 600; color: #3b82f6;
+        text-decoration: none; border: none; background: none; cursor: pointer;
+        text-align: center; width: 100%; display: block;
+        padding: 12px 0 0;
+        font-family: inherit;
+        transition: color .15s;
+    }
+    .act-link:hover { color: #1d4ed8; }
+
+    /* Footer */
+    .page-footer {
+        text-align: center;
+        font-size: 0.75rem; color: #94a3b8;
+        padding: 14px 28px;
+        border-top: 1px solid #e2e8f0;
+        background: white;
+        flex-shrink: 0;
+    }
+
+    /* Chat FAB */
+    .fab {
+        position: fixed; bottom: 28px; right: 28px;
+        width: 50px; height: 50px; border-radius: 50%;
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        box-shadow: 0 6px 20px rgba(37,99,235,.4);
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer; border: none; color: white;
+        transition: all .2s;
+    }
+    .fab:hover { transform: scale(1.08); box-shadow: 0 8px 25px rgba(37,99,235,.5); }
+    .fab svg { width: 22px; height: 22px; }
+    </style>
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-logo-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" fill="#1e40af"/>
+                <path d="M12 15L8.47 16.85L9.14 12.93L6.29 10.15L10.23 9.57L12 6L13.77 9.57L17.71 10.15L14.86 12.93L15.53 16.85L12 15Z" fill="white"/>
+            </svg>
+        </div>
+        <div class="sidebar-logo-text">
+            <h2>Hoa Thảo Tiên</h2>
+            <p>Trung tâm giáo dục</p>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a class="nav-item active" href="parent_dashboard.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Tổng quan
+        </a>
+        <a class="nav-item" href="parent_notifications.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            Thông báo
+            <span class="nav-badge">3</span>
+        </a>
+        <a class="nav-item" href="parent_schedule.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            Thời khóa biểu
+        </a>
+        <a class="nav-item" href="parent_attendance.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+            Điểm danh
+        </a>
+        <a class="nav-item" href="parent_homework.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+            Bài tập về nhà
+        </a>
+        <a class="nav-item" href="parent_fees.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+            Học phí
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <a href="../index.html" class="logout-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            Đăng xuất
+        </a>
+    </div>
+</aside>
+
+<!-- ===== MAIN ===== -->
+<div class="main-content">
+    <!-- TOP NAV -->
+    <header class="top-nav">
+        <div class="nav-left">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#94a3b8" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            <span class="nav-page-title">Tổng quan</span>
+        </div>
+        <div class="nav-right">
+            <div class="parent-info">
+                <div class="parent-name">Nguyễn Thị Thanh Tâm</div>
+                <div class="parent-role">PHỤ HUYNH BÉ AN</div>
+            </div>
+            <div class="parent-avatar">T</div>
+            <button class="icon-btn" title="Thông báo" onclick="window.location='parent_notifications.html'">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                <div class="notif-dot"></div>
+            </button>
+            <button class="icon-btn" title="Cài đặt">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </button>
+            <button class="btn-contact" onclick="alert('Tính năng liên hệ giáo viên đang được phát triển.')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                Liên hệ giáo viên
+            </button>
+        </div>
+    </header>
+
+    <!-- PAGE BODY -->
+    <div class="page-body">
+
+        <!-- Greeting -->
+        <div class="greeting-row">
+            <div class="greeting-text">
+                <h1>Chào phụ huynh bé An 👋</h1>
+                <p>Cập nhật tình hình học tập của bé trong tuần này.</p>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#eff6ff;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="10" x2="21" y2="10"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="16" y1="2" x2="16" y2="6"></line></svg>
+                </div>
+                <div class="stat-info">
+                    <div class="num">12 <span>/ 24 buổi</span></div>
+                    <div class="label">Buổi học còn lại</div>
+                    <div class="sublabel" style="color:#f59e0b;">Còn 12 buổi đến hết kỳ</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#f0fdf4;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                </div>
+                <div class="stat-info">
+                    <div class="num">8.5</div>
+                    <div class="label">Điểm trung bình</div>
+                    <div class="sublabel" style="color:#10b981;">🏆 Hạng Giỏi</div>
+                </div>
+            </div>
+            <div class="stat-card" style="cursor:pointer;" onclick="window.location='parent_notifications.html'">
+                <div class="stat-icon" style="background:#fef2f2;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                </div>
+                <div class="stat-info">
+                    <div class="num">3</div>
+                    <div class="label">Thông báo mới</div>
+                    <div class="sublabel" style="color:#ef4444;">3 chưa đọc</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main grid -->
+        <div class="main-grid">
+            <!-- Left Column -->
+            <div style="display:flex; flex-direction:column; gap:18px;">
+
+                <!-- Weekly Schedule -->
+                <div class="schedule-card">
+                    <div class="card-header">
+                        <span class="card-title">Lịch học trong tuần</span>
+                        <div class="week-nav">
+                            <button class="week-btn"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+                            <span class="week-label" id="week-label">Tuần 24 (15/07 – 21/07)</span>
+                            <button class="week-btn"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+                        </div>
+                    </div>
+
+                    <div class="week-strip">
+                        <!-- T2 -->
+                        <div class="day-col">
+                            <span class="day-name">T2</span>
+                            <div class="day-slot lesson today">
+                                <span class="s-class">Toán K8A</span>
+                                <span class="s-time">17:30–19:00</span>
+                                <span class="s-room">P.201</span>
+                            </div>
+                        </div>
+                        <!-- T3 -->
+                        <div class="day-col">
+                            <span class="day-name">T3</span>
+                            <div class="day-slot empty">Trống</div>
+                        </div>
+                        <!-- T4 -->
+                        <div class="day-col">
+                            <span class="day-name">T4</span>
+                            <div class="day-slot lesson purple">
+                                <span class="s-class">Văn K8A</span>
+                                <span class="s-time">17:30–19:00</span>
+                                <span class="s-room">P.303</span>
+                            </div>
+                        </div>
+                        <!-- T5 -->
+                        <div class="day-col">
+                            <span class="day-name">T5</span>
+                            <div class="day-slot lesson">
+                                <span class="s-class">Toán K8A</span>
+                                <span class="s-time">17:30–19:00</span>
+                                <span class="s-room">P.201</span>
+                            </div>
+                        </div>
+                        <!-- T6 -->
+                        <div class="day-col">
+                            <span class="day-name">T6</span>
+                            <div class="day-slot lesson green">
+                                <span class="s-class">Anh K8A</span>
+                                <span class="s-time">16:00–19:00</span>
+                                <span class="s-room">P.203</span>
+                            </div>
+                        </div>
+                        <!-- T7 -->
+                        <div class="day-col">
+                            <span class="day-name">T7</span>
+                            <div class="day-slot lesson orange">
+                                <span class="s-class">Kỹ năng</span>
+                                <span class="s-time">08:00–11:00</span>
+                                <span class="s-room">P.301</span>
+                            </div>
+                        </div>
+                        <!-- CN -->
+                        <div class="day-col">
+                            <span class="day-name">CN</span>
+                            <div class="day-slot empty">Nghỉ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Achievement Banner -->
+                <div class="achievement-banner">
+                    <img src="assets/student_achievement.png" alt="Thành tích học sinh">
+                    <div class="achievement-overlay">
+                        <div class="achieve-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            THÀNH TÍCH NỔI BẬT
+                        </div>
+                        <h2>Bé An vừa đạt điểm 10 môn Toán</h2>
+                        <p>Cô giáo đây xứng đáng được nhận một phần quà nhỏ để khích lệ tụi bé ma nhé!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Activity Feed -->
+            <div class="activity-card">
+                <div class="card-header">
+                    <span class="card-title">Hoạt động gần đây</span>
+                </div>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="act-dot" style="background:#f0fdf4;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                        </div>
+                        <div class="act-body">
+                            <div class="act-title">Đã nộp bài tập về nhà</div>
+                            <div class="act-sub">Bài tập Đại số chương 3 – Lớp Toán K8A</div>
+                            <div class="act-time">Hôm nay, 09:30</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="act-dot" style="background:#fdf4ff;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#c026d3" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        </div>
+                        <div class="act-body">
+                            <div class="act-title">Có điểm số mới: <strong style="color:#c026d3;">10.0</strong></div>
+                            <div class="act-sub">Kiểm tra 15 phút – Lớp Anh K8A</div>
+                            <div class="act-time">Hôm qua, 10:45</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="act-dot" style="background:#fff7ed;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                        </div>
+                        <div class="act-body">
+                            <div class="act-title">Điểm danh có mặt ✓</div>
+                            <div class="act-sub">Lớp Văn K8A – GV. Nguyễn Văn B</div>
+                            <div class="act-time">15/07, 17:30</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="act-dot" style="background:#eff6ff;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                        </div>
+                        <div class="act-body">
+                            <div class="act-title">Nhận bài tập mới</div>
+                            <div class="act-sub">Trắc nghiệm Hình học không gian</div>
+                            <div class="act-time">14/07, 10:00</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="act-dot" style="background:#fef2f2;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        </div>
+                        <div class="act-body">
+                            <div class="act-title">Thông báo từ trung tâm</div>
+                            <div class="act-sub">Lịch thi cuối kỳ đã được cập nhật</div>
+                            <div class="act-time">13/07, 08:00</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="parent_notifications.html" class="act-link">Xem tất cả hoạt động →</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="page-footer">
+        © 2026 Hoa Thảo Tiên — Hệ thống Quản lý Giáo dục Hiện đại
+    </footer>
+</div>
+
+<!-- FAB Chat -->
+<button class="fab" title="Chat với giáo viên" onclick="alert('Tính năng chat đang phát triển.')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+</button>
+
+<script>
+// Dynamic week label
+(function() {
+    const now = new Date();
+    const dayOfWeek = now.getDay();
+    const monday = new Date(now);
+    monday.setDate(now.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    const fmt = d => d.getDate() + '/' + String(d.getMonth() + 1).padStart(2,'0');
+    document.getElementById('week-label').textContent =
+        `Tuần (${fmt(monday)} – ${fmt(sunday)})`;
+})();
+</script>
+</body>
+</html>
+

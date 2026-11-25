@@ -1,0 +1,84 @@
+/* Assignment Detail Specific Styles */
+
+.ad-stats-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.ad-stat-box {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px -3px rgba(0,0,0,0.05);
+    border: 1px solid #f1f5f9;
+}
+
+.ad-stat-box h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    line-height: 1;
+}
+
+.ad-stat-box p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.ad-student-table th {
+    white-space: nowrap;
+}
+
+/* Modal styles overrides for grading */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-overlay.active {
+    display: flex;
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: #334155;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.file-item:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+}
+
+.file-item svg {
+    color: #ef4444;
+}

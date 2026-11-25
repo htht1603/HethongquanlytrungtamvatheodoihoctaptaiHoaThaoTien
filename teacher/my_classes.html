@@ -1,0 +1,563 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lớp học của tôi - Học Thân Thiện</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    .page-header { margin-bottom: 24px; }
+    .page-header h1 { font-size: 1.55rem; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+    .page-header p { color: #64748b; font-size: 0.9rem; }
+
+    /* Stats */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 26px; }
+    .stat-card {
+        background: white; border-radius: 14px; padding: 18px 20px;
+        display: flex; align-items: center; gap: 14px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #f1f5f9;
+        transition: transform .2s, box-shadow .2s;
+    }
+    .stat-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+    .stat-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .stat-icon svg { width: 24px; height: 24px; }
+    .stat-num { font-size: 1.8rem; font-weight: 800; color: #0f172a; line-height: 1; margin-bottom: 4px; }
+    .stat-label { font-size: 0.82rem; color: #64748b; font-weight: 500; }
+
+    /* Class List Grid */
+    .classes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .class-card {
+        background: white; border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.05); border: 1px solid #f1f5f9;
+        overflow: hidden; cursor: pointer;
+        transition: transform .2s, box-shadow .2s;
+    }
+    .class-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,0.10); }
+    .class-card-top {
+        padding: 20px 22px;
+        display: flex; align-items: flex-start; justify-content: space-between;
+    }
+    .class-color-bar {
+        height: 5px;
+        border-radius: 0;
+    }
+    .class-name { font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+    .class-sub { font-size: 0.83rem; color: #64748b; font-weight: 500; }
+    .class-badge {
+        padding: 4px 10px; border-radius: 20px;
+        font-size: 0.75rem; font-weight: 600; white-space: nowrap;
+    }
+    .badge-active   { background: #f0fdf4; color: #16a34a; }
+    .badge-inactive { background: #fef2f2; color: #ef4444; }
+    .class-card-stats {
+        display: flex; border-top: 1px solid #f8fafc;
+        padding: 14px 22px; gap: 20px;
+    }
+    .class-stat-item { text-align: center; }
+    .class-stat-num { font-size: 1.15rem; font-weight: 700; color: #1e293b; margin-bottom: 2px; }
+    .class-stat-label { font-size: 0.75rem; color: #64748b; }
+    .class-card-footer {
+        border-top: 1px solid #f8fafc;
+        padding: 12px 22px;
+        display: flex; align-items: center; justify-content: space-between;
+    }
+    .class-schedule { font-size: 0.82rem; color: #64748b; display: flex; align-items: center; gap: 6px; }
+    .class-schedule svg { width: 14px; height: 14px; color: #94a3b8; }
+    .btn-view-detail {
+        font-size: 0.82rem; font-weight: 600; color: #3b82f6;
+        border: none; background: none; cursor: pointer;
+        display: flex; align-items: center; gap: 5px;
+        font-family: inherit;
+        transition: color .15s;
+    }
+    .btn-view-detail:hover { color: #1d4ed8; }
+    .btn-view-detail svg { width: 14px; height: 14px; }
+
+    /* Toolbar */
+    .toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+    .search-box-sm {
+        display: flex; align-items: center; gap: 8px;
+        border: 1.5px solid #e2e8f0; border-radius: 9px;
+        padding: 9px 14px; background: white; transition: border-color .2s;
+    }
+    .search-box-sm:focus-within { border-color: #3b82f6; }
+    .search-box-sm input {
+        border: none; outline: none; font-size: 0.9rem;
+        color: #334155; background: transparent; width: 220px; font-family: inherit;
+    }
+    .filter-select {
+        border: 1.5px solid #e2e8f0; border-radius: 9px; padding: 9px 14px;
+        font-size: 0.9rem; font-family: inherit; color: #334155;
+        background: white; outline: none; cursor: pointer;
+    }
+
+    /* Detail Panel */
+    .detail-overlay {
+        position: fixed; inset: 0;
+        background: rgba(15,23,42,.45); backdrop-filter: blur(4px);
+        display: none; align-items: center; justify-content: flex-end;
+        z-index: 1000; animation: fadeIn .2s ease;
+    }
+    .detail-overlay.show { display: flex; }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+    .detail-panel {
+        width: 720px; max-width: 95vw; height: 100vh;
+        background: #f8fafc; overflow-y: auto;
+        box-shadow: -10px 0 40px rgba(0,0,0,0.15);
+        animation: slideInRight .25s ease;
+    }
+    @keyframes slideInRight {
+        from { transform: translateX(100%); }
+        to   { transform: translateX(0); }
+    }
+    .panel-header {
+        background: white; padding: 24px 28px;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex; align-items: flex-start; justify-content: space-between;
+        position: sticky; top: 0; z-index: 10;
+    }
+    .panel-close {
+        width: 36px; height: 36px; border-radius: 8px;
+        border: 1.5px solid #e2e8f0; background: white; cursor: pointer;
+        display: flex; align-items: center; justify-content: center; color: #64748b;
+        transition: all .15s;
+    }
+    .panel-close:hover { background: #f8fafc; border-color: #cbd5e1; }
+    .panel-body { padding: 24px 28px; }
+    .section-title {
+        font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+        letter-spacing: .6px; color: #94a3b8; margin-bottom: 14px;
+    }
+    .info-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr);
+        gap: 14px; margin-bottom: 24px;
+    }
+    .info-box {
+        background: white; border-radius: 10px;
+        padding: 14px 16px; border: 1px solid #e2e8f0;
+    }
+    .info-box .label { font-size: 0.75rem; color: #94a3b8; font-weight: 600; margin-bottom: 4px; text-transform: uppercase; }
+    .info-box .val { font-size: 1rem; font-weight: 700; color: #1e293b; }
+
+    /* Mini schedule in detail */
+    .mini-cal {
+        background: white; border-radius: 12px; border: 1px solid #e2e8f0;
+        overflow: hidden; margin-bottom: 24px;
+    }
+    .mini-cal-head {
+        background: #1e40af; color: white;
+        padding: 12px 16px; font-size: 0.88rem; font-weight: 700;
+        display: flex; align-items: center; justify-content: space-between;
+    }
+    .mini-cal table { width: 100%; border-collapse: collapse; }
+    .mini-cal table thead th {
+        background: #f8fafc; padding: 9px 12px;
+        font-size: 0.75rem; font-weight: 700; color: #64748b;
+        text-transform: uppercase; letter-spacing: .4px;
+        border-bottom: 1px solid #e2e8f0; white-space: nowrap;
+    }
+    .mini-cal table tbody td {
+        padding: 10px 12px; border-bottom: 1px solid #f8fafc;
+        font-size: 0.83rem; color: #334155; vertical-align: middle;
+    }
+    .mini-cal table tbody tr:last-child td { border-bottom: none; }
+    .mini-cal table tbody tr:hover td { background: #f8fbff; }
+    .dot {
+        width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px;
+    }
+
+    /* Student grid */
+    .student-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+    .student-item {
+        display: flex; align-items: center; gap: 10px;
+        background: white; border-radius: 10px;
+        padding: 10px 12px; border: 1px solid #f1f5f9;
+        transition: box-shadow .15s;
+    }
+    .student-item:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+    .s-avatar {
+        width: 34px; height: 34px; border-radius: 50%;
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        color: white; display: flex; align-items: center; justify-content: center;
+        font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
+    }
+    .s-name { font-size: 0.83rem; font-weight: 600; color: #1e293b; }
+    .s-id { font-size: 0.72rem; color: #94a3b8; }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" fill="#1e40af"/>
+                <path d="M12 15L8.47 16.85L9.14 12.93L6.29 10.15L10.23 9.57L12 6L13.77 9.57L17.71 10.15L14.86 12.93L15.53 16.85L12 15Z" fill="white"/>
+            </svg>
+        </div>
+        <div class="sidebar-logo-text">
+            <h2>Hoa Thảo Tiên</h2>
+            <p>Trung tâm giáo dục</p>
+        </div>
+    </div>
+    <ul class="sidebar-menu">
+        <li><a href="teacher_dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Tổng quan</a></li>
+        <div class="sidebar-menu-category">QUẢN LÝ</div>
+        <li><a href="attendance.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>Quản lý điểm danh</a></li>
+        <li class="active"><a href="my_classes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Lớp học của tôi</a></li>
+        <li><a href="schedule.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Thời khóa biểu</a></li>
+        <li><a href="assignments.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>Quản lý bài tập</a></li>
+    </ul>
+    <div class="sidebar-footer">
+        <a href="../index.html" class="logout-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>Đăng xuất</a>
+    </div>
+</aside>
+
+<main class="main-content">
+    <header class="top-nav">
+        <div class="nav-left">
+            <button class="menu-toggle"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+            <span style="font-weight:600; color:#334155;">Lớp học của tôi</span>
+        </div>
+        <div class="nav-right">
+            <button class="notification-btn">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                <span class="badge">3</span>
+            </button>
+            <div class="user-profile">
+                <div class="avatar">N</div>
+                <div class="user-info">
+                    <span class="user-name">Nguyễn Thị Hà</span>
+                    <span class="user-role">Giáo viên</span>
+                </div>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+        </div>
+    </header>
+
+    <div style="padding: 28px; max-width: 1440px; margin: 0 auto; overflow-y: auto; height: calc(100vh - 70px);">
+
+        <div class="page-header">
+            <h1>Lớp học của tôi</h1>
+            <p>Danh sách các lớp bạn đang phụ trách</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#eff6ff;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                </div>
+                <div>
+                    <div class="stat-num">10</div>
+                    <div class="stat-label">Tổng lớp học</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#f0fdf4;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </div>
+                <div>
+                    <div class="stat-num">9</div>
+                    <div class="stat-label">Đang hoạt động</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#fef2f2;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                </div>
+                <div>
+                    <div class="stat-num">1</div>
+                    <div class="stat-label">Tạm nghỉ</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#fdf4ff;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#c026d3" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </div>
+                <div>
+                    <div class="stat-num">257</div>
+                    <div class="stat-label">Tổng học sinh</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="search-box-sm">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="search-class" placeholder="Tìm kiếm lớp học…" oninput="filterClasses()">
+            </div>
+            <select class="filter-select" id="filter-grade" onchange="filterClasses()">
+                <option value="all">Tất cả khối</option>
+                <option value="K7">Khối 7</option>
+                <option value="K8">Khối 8</option>
+                <option value="K9">Khối 9</option>
+                <option value="K10">Khối 10</option>
+                <option value="K11">Khối 11</option>
+            </select>
+            <select class="filter-select" id="filter-status" onchange="filterClasses()">
+                <option value="all">Tất cả trạng thái</option>
+                <option value="Đang hoạt động">Đang hoạt động</option>
+                <option value="Tạm nghỉ">Tạm nghỉ</option>
+            </select>
+        </div>
+
+        <!-- Class Cards -->
+        <div class="classes-grid" id="classes-grid">
+            <!-- Injected by JS -->
+        </div>
+
+    </div>
+</main>
+
+<!-- ===== Detail Panel ===== -->
+<div class="detail-overlay" id="detail-overlay" onclick="closeDetail(event)">
+    <div class="detail-panel" id="detail-panel">
+        <div class="panel-header">
+            <div>
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+                    <h2 id="dp-name" style="font-size:1.4rem; font-weight:800; color:#0f172a;">Toán K8A</h2>
+                    <span class="badge-active" id="dp-status">Đang hoạt động</span>
+                </div>
+                <p style="font-size:0.88rem; color:#64748b;" id="dp-desc">Lớp Toán K8A — Giáo viên: Nguyễn Thị Hà</p>
+            </div>
+            <button class="panel-close" onclick="closeDetail()">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+
+        <div class="panel-body">
+            <!-- Info Grid -->
+            <p class="section-title">Thông tin lớp học</p>
+            <div class="info-grid">
+                <div class="info-box">
+                    <div class="label">Sĩ số</div>
+                    <div class="val" id="dp-total">30 học sinh</div>
+                </div>
+                <div class="info-box">
+                    <div class="label">Phòng học</div>
+                    <div class="val" id="dp-room">P.201</div>
+                </div>
+                <div class="info-box">
+                    <div class="label">Học phí/tháng</div>
+                    <div class="val" id="dp-fee">1.800.000 đ</div>
+                </div>
+                <div class="info-box">
+                    <div class="label">Số buổi/tuần</div>
+                    <div class="val" id="dp-sessions">2 buổi</div>
+                </div>
+                <div class="info-box">
+                    <div class="label">Bắt đầu</div>
+                    <div class="val" id="dp-start">01/09/2025</div>
+                </div>
+                <div class="info-box">
+                    <div class="label">Kết thúc dự kiến</div>
+                    <div class="val" id="dp-end">31/05/2026</div>
+                </div>
+            </div>
+
+            <!-- Mini Schedule -->
+            <p class="section-title">Lịch học</p>
+            <div class="mini-cal">
+                <div class="mini-cal-head">
+                    <span id="dp-schedule-title">Toán K8A — Thứ 2, Thứ 4</span>
+                    <a href="schedule.html" style="color:rgba(255,255,255,.7); font-size:0.8rem; text-decoration:none;">Xem lịch đầy đủ →</a>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Thứ</th>
+                                <th>Giờ bắt đầu</th>
+                                <th>Giờ kết thúc</th>
+                                <th>Phòng</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dp-schedule-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Students -->
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom: 14px;">
+                <p class="section-title" style="margin-bottom:0;">Danh sách học sinh (<span id="dp-student-count">30</span>)</p>
+                <a href="attendance.html" style="font-size:0.82rem; color:#3b82f6; text-decoration:none; font-weight:600;">Điểm danh →</a>
+            </div>
+            <div class="student-grid" id="dp-students"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+const classesData = [
+    { id:'K8A', name:'Toán K8A', grade:'K8', students:30, active:9, room:'P.201', fee:'1.800.000', sessions:'Thứ 2, Thứ 4', time:'07:30 – 09:00', status:'Đang hoạt động', color:'#3b82f6', start:'01/09/2025', end:'31/05/2026',
+      schedule:[{day:'Thứ 2',start:'07:30',end:'09:00',room:'P.201'},{day:'Thứ 4',start:'11:00',end:'12:30',room:'P.201'},{day:'Thứ 7',start:'11:00',end:'12:30',room:'P.201'}],
+      studentList:['Nguyễn Văn An','Trần Thị Bình','Lê Văn Cường','Phạm Thị Dung','Hoàng Văn Em','Vũ Thị Phương','Ngô Văn Giang','Bùi Thị Hà','Đặng Văn Khanh','Lý Thị Lan','Trương Văn Minh','Hồ Thị Ngọc','Phan Văn Phúc','Đinh Thị Quỳnh','Cao Văn Sơn']
+    },
+    { id:'K9B', name:'Toán K9B', grade:'K9', students:28, active:25, room:'P.202', fee:'2.000.000', sessions:'Thứ 3, Thứ 5', time:'07:30 – 09:00', status:'Đang hoạt động', color:'#10b981', start:'01/09/2025', end:'31/05/2026',
+      schedule:[{day:'Thứ 3',start:'07:30',end:'09:00',room:'P.202'},{day:'Thứ 5',start:'09:15',end:'10:45',room:'P.202'},{day:'Thứ 7',start:'15:45',end:'17:15',room:'P.303'}],
+      studentList:['Nguyễn Thị An','Hoàng Văn Bình','Đinh Thị Chi','Đỗ Văn Dũng','Phạm Thị Em','Lê Văn Hùng','Vũ Thị Khanh','Bùi Văn Long']
+    },
+    { id:'K10C', name:'Toán K10C', grade:'K10', students:29, active:27, room:'P.203', fee:'2.200.000', sessions:'Thứ 2, Thứ 6', time:'09:15 – 10:45', status:'Đang hoạt động', color:'#c026d3', start:'15/09/2025', end:'31/05/2026',
+      schedule:[{day:'Thứ 2',start:'09:15',end:'10:45',room:'P.205'},{day:'Thứ 5',start:'14:00',end:'15:30',room:'P.301'},{day:'Thứ 7',start:'07:30',end:'09:00',room:'P.204'}],
+      studentList:['Trần Văn Anh','Nguyễn Thị Ba','Lê Văn Cách','Đào Thị Duyên','Hoàng Văn Đạt','Phùng Thị Giang','Tô Văn Hải','Ngô Thị Hoa']
+    },
+    { id:'K9A', name:'Toán K9A', grade:'K9', students:26, active:24, room:'P.303', fee:'2.000.000', sessions:'Thứ 4, Thứ 6', time:'09:15 – 10:45', status:'Đang hoạt động', color:'#f59e0b', start:'01/09/2025', end:'31/05/2026',
+      schedule:[{day:'Thứ 4',start:'09:15',end:'10:45',room:'P.303'},{day:'Thứ 6',start:'09:15',end:'10:45',room:'P.303'}],
+      studentList:['Lâm Văn Anh','Trịnh Thị Bích','Phan Văn Cảnh','Thái Thị Diệp']
+    },
+    { id:'K10A', name:'Toán K10A', grade:'K10', students:27, active:25, room:'P.204', fee:'2.200.000', sessions:'Thứ 2, Thứ 5', time:'07:30 – 09:00', status:'Đang hoạt động', color:'#8b5cf6', start:'01/09/2025', end:'31/05/2026',
+      schedule:[{day:'Thứ 2',start:'07:30',end:'09:00',room:'P.203'},{day:'Thứ 6',start:'07:30',end:'09:00',room:'P.204'}],
+      studentList:['Võ Thị An','Đặng Văn Bảo','Chu Thị Châu','Trần Văn Điệp']
+    },
+    { id:'K8B', name:'Toán K8B', grade:'K8', students:30, active:28, room:'P.205', fee:'1.800.000', sessions:'Thứ 3, Thứ 7', time:'14:00 – 15:30', status:'Đang hoạt động', color:'#ea580c', start:'01/09/2025', end:'31/05/2026',
+      schedule:[{day:'Thứ 3',start:'14:00',end:'15:30',room:'P.205'},{day:'Thứ 7',start:'14:00',end:'15:30',room:'P.205'}],
+      studentList:['Tạ Thị An','Mai Văn Bình','Lưu Thị Chiều','Phan Văn Dương']
+    },
+    { id:'K7A', name:'Toán K7A', grade:'K7', students:25, active:20, room:'P.301', fee:'1.600.000', sessions:'Thứ 4, Thứ 6', time:'15:45 – 17:15', status:'Đang hoạt động', color:'#06b6d4', start:'15/09/2025', end:'31/05/2026',
+      schedule:[{day:'Thứ 4',start:'15:45',end:'17:15',room:'P.301'},{day:'Thứ 6',start:'15:45',end:'17:15',room:'P.301'}],
+      studentList:['Dương Thị An','Lý Văn Bình','Ngô Thị Cúc']
+    },
+    { id:'K11A', name:'Toán K11A', grade:'K11', students:22, active:18, room:'P.302', fee:'2.400.000', sessions:'Thứ 3, Thứ 5', time:'14:00 – 15:30', status:'Tạm nghỉ', color:'#64748b', start:'01/09/2025', end:'31/05/2026',
+      schedule:[{day:'Thứ 3',start:'14:00',end:'15:30',room:'P.302'},{day:'Thứ 5',start:'14:00',end:'15:30',room:'P.302'}],
+      studentList:['Hà Thị An','Kiều Văn Bình']
+    },
+];
+
+const colorMap = {};
+classesData.forEach(c => colorMap[c.id] = c.color);
+
+function getCardColor(color) {
+    return color;
+}
+
+function renderClasses(data) {
+    const grid = document.getElementById('classes-grid');
+    grid.innerHTML = '';
+    data.forEach(cls => {
+        const isActive = cls.status === 'Đang hoạt động';
+        grid.innerHTML += `
+        <div class="class-card" onclick="openDetail('${cls.id}')">
+            <div class="class-color-bar" style="background:${cls.color};"></div>
+            <div class="class-card-top">
+                <div>
+                    <div class="class-name">${cls.name}</div>
+                    <div class="class-sub">${cls.sessions} &nbsp;·&nbsp; ${cls.time}</div>
+                </div>
+                <span class="class-badge ${isActive ? 'badge-active' : 'badge-inactive'}">${cls.status}</span>
+            </div>
+            <div class="class-card-stats">
+                <div class="class-stat-item">
+                    <div class="class-stat-num">${cls.students}</div>
+                    <div class="class-stat-label">Sĩ số</div>
+                </div>
+                <div class="class-stat-item">
+                    <div class="class-stat-num" style="color:#10b981;">${cls.active}</div>
+                    <div class="class-stat-label">Đang học</div>
+                </div>
+                <div class="class-stat-item">
+                    <div class="class-stat-num">${cls.room}</div>
+                    <div class="class-stat-label">Phòng học</div>
+                </div>
+                <div class="class-stat-item">
+                    <div class="class-stat-num">${cls.fee.replace('.',',')}đ</div>
+                    <div class="class-stat-label">/tháng</div>
+                </div>
+            </div>
+            <div class="class-card-footer">
+                <span class="class-schedule">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    ${cls.sessions}
+                </span>
+                <button class="btn-view-detail">
+                    Xem chi tiết
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
+            </div>
+        </div>`;
+    });
+}
+
+function filterClasses() {
+    const q = document.getElementById('search-class').value.toLowerCase();
+    const grade = document.getElementById('filter-grade').value;
+    const status = document.getElementById('filter-status').value;
+    const filtered = classesData.filter(c => {
+        const matchQ = c.name.toLowerCase().includes(q);
+        const matchGrade = grade === 'all' || c.grade === grade;
+        const matchStatus = status === 'all' || c.status === status;
+        return matchQ && matchGrade && matchStatus;
+    });
+    renderClasses(filtered);
+}
+
+function openDetail(id) {
+    const cls = classesData.find(c => c.id === id);
+    if (!cls) return;
+
+    document.getElementById('dp-name').textContent = cls.name;
+    const st = document.getElementById('dp-status');
+    st.textContent = cls.status;
+    st.className = cls.status === 'Đang hoạt động' ? 'badge-active' : 'badge-inactive';
+    document.getElementById('dp-desc').textContent = `Lớp ${cls.name} — Giáo viên: Nguyễn Thị Hà`;
+    document.getElementById('dp-total').textContent = cls.students + ' học sinh';
+    document.getElementById('dp-room').textContent = cls.room;
+    document.getElementById('dp-fee').textContent = cls.fee.replace('.',',') + ' đ';
+    document.getElementById('dp-sessions').textContent = cls.schedule.length + ' buổi';
+    document.getElementById('dp-start').textContent = cls.start;
+    document.getElementById('dp-end').textContent = cls.end;
+    document.getElementById('dp-schedule-title').textContent = cls.name + ' — ' + cls.sessions;
+    document.getElementById('dp-student-count').textContent = cls.students;
+
+    // Schedule table
+    const stbody = document.getElementById('dp-schedule-tbody');
+    stbody.innerHTML = '';
+    cls.schedule.forEach(s => {
+        stbody.innerHTML += `<tr>
+            <td><strong>${s.day}</strong></td>
+            <td>${s.start}</td>
+            <td>${s.end}</td>
+            <td>${s.room}</td>
+            <td><span class="badge-active">Đang dạy</span></td>
+        </tr>`;
+    });
+
+    // Students
+    const sg = document.getElementById('dp-students');
+    sg.innerHTML = '';
+    cls.studentList.forEach((name, i) => {
+        sg.innerHTML += `<div class="student-item">
+            <div class="s-avatar">${name.charAt(0)}</div>
+            <div>
+                <div class="s-name">${name}</div>
+                <div class="s-id">${cls.id}${String(i+1).padStart(3,'0')}</div>
+            </div>
+        </div>`;
+    });
+
+    document.getElementById('detail-overlay').classList.add('show');
+}
+
+function closeDetail(e) {
+    if (!e || e.target === document.getElementById('detail-overlay')) {
+        document.getElementById('detail-overlay').classList.remove('show');
+    }
+}
+
+// Init
+renderClasses(classesData);
+</script>
+</body>
+</html>
+

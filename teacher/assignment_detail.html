@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết bài tập - Học Thân Thiện</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/assignments.css">
+    <link rel="stylesheet" href="../css/assignment_detail.css">
+</head>
+<body style="background: #f8fafc;">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" fill="#1e40af"/>
+                    <path d="M12 15L8.47 16.85L9.14 12.93L6.29 10.15L10.23 9.57L12 6L13.77 9.57L17.71 10.15L14.86 12.93L15.53 16.85L12 15Z" fill="white"/>
+                </svg>
+            </div>
+            <div class="sidebar-logo-text">
+                <h2>Hoa Thảo Tiên</h2>
+                <p>Trung tâm giáo dục</p>
+            </div>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li>
+                <a href="teacher_dashboard.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    Tổng quan
+                </a>
+            </li>
+            <div class="sidebar-menu-category">QUẢN LÝ</div>
+            <li>
+                <a href="attendance.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    Quản lý điểm danh
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    Quản lý lớp học
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    Thời khóa biểu
+                </a>
+            </li>
+            <li class="active">
+                <a href="assignments.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    Quản lý bài tập
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <!-- Top Nav -->
+        <header class="top-nav">
+            <div class="nav-left">
+                <button class="menu-toggle">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+                <div class="breadcrumb" style="font-weight: 500;">
+                    <span style="color: #64748b;">Quản lý bài tập</span>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="user-profile">
+                    <div class="avatar">N</div>
+                    <div class="user-info">
+                        <span class="user-name">Nguyễn Thị Hà</span>
+                        <span class="user-role">Giáo viên</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div style="padding: 24px; max-width: 1400px; margin: 0 auto; width: 100%;">
+            
+            <a href="assignments.html" style="display: inline-flex; align-items: center; gap: 8px; color: #64748b; text-decoration: none; font-weight: 500; font-size: 0.95rem; margin-bottom: 20px;">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Quay lại
+            </a>
+
+            <!-- Assignment Info Header -->
+            <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px -2px rgba(0,0,0,0.05); margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                            <h1 id="ad-title" style="margin: 0; font-size: 1.5rem; color: #0f172a;">Bài tập Đại số chương 3</h1>
+                            <span class="type-badge type-essay" id="ad-type">Tự luận</span>
+                            <span class="badge badge-success" style="padding: 4px 10px;" id="ad-status">Đã giao</span>
+                        </div>
+                        <p id="ad-content" style="margin: 0; color: #475569; font-size: 0.95rem; max-width: 800px; line-height: 1.5;">Các em làm bài tập trong sách giáo khoa trang 45, 46. Chú ý trình bày cẩn thận từng bước giải phương trình bậc hai.</p>
+                    </div>
+                    <button class="btn btn-outline" style="display: flex; align-items: center; gap: 8px;">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Tải file đính kèm
+                    </button>
+                </div>
+                
+                <div style="display: flex; gap: 32px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+                    <div>
+                        <p style="margin: 0 0 4px 0; font-size: 0.75rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Lớp học</p>
+                        <p style="margin: 0; font-weight: 500; color: #1e293b;" id="ad-class">Toán K8A</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 4px 0; font-size: 0.75rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Ngày giao</p>
+                        <p style="margin: 0; font-weight: 500; color: #1e293b;" id="ad-start">20/07/2026</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 4px 0; font-size: 0.75rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Hạn nộp</p>
+                        <p style="margin: 0; font-weight: 600; color: #ef4444;" id="ad-due">25/07/2026 23:59</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="ad-stats-row">
+                <div class="ad-stat-box">
+                    <h3 style="color: #0f172a;">30</h3>
+                    <p>Tổng số</p>
+                </div>
+                <div class="ad-stat-box">
+                    <h3 style="color: #10b981;">20</h3>
+                    <p>Đã nộp</p>
+                </div>
+                <div class="ad-stat-box">
+                    <h3 style="color: #ef4444;">8</h3>
+                    <p>Nộp muộn</p>
+                </div>
+                <div class="ad-stat-box">
+                    <h3 style="color: #3b82f6;">2</h3>
+                    <p>Chưa nộp</p>
+                </div>
+                <div class="ad-stat-box">
+                    <h3 style="color: #8b5cf6;">15</h3>
+                    <p>Đã chấm</p>
+                </div>
+                <div class="ad-stat-box">
+                    <h3 style="color: #f59e0b;">7</h3>
+                    <p>Chưa chấm</p>
+                </div>
+            </div>
+
+            <!-- Controls & Table -->
+            <div class="am-controls" style="margin-top: 24px;">
+                <div class="am-filters">
+                    <div class="search-box" style="width: 250px;">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" placeholder="Tìm kiếm học sinh..." id="search-student">
+                    </div>
+                    <select class="form-control" style="width: 160px;" id="filter-status">
+                        <option value="all">Tất cả trạng thái</option>
+                        <option value="Đã nộp">Đã nộp</option>
+                        <option value="Chưa nộp">Chưa nộp</option>
+                        <option value="Nộp muộn">Nộp muộn</option>
+                        <option value="Đã chấm">Đã chấm</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="am-table-wrapper">
+                <div class="am-table-scroll">
+                    <table class="t-table ad-student-table">
+                        <thead>
+                            <tr>
+                                <th>Mã HS</th>
+                                <th>Họ Tên</th>
+                                <th>Thời gian nộp</th>
+                                <th>Trạng thái</th>
+                                <th>Điểm số</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="students-tbody">
+                            <!-- Rendered by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Grading Modal -->
+    <div class="modal-overlay" id="grading-modal">
+        <div class="modal" style="width: 650px; max-width: 95vw; background: #f8fafc; padding: 0; overflow: hidden; display: flex; flex-direction: column; max-height: 90vh;">
+            <div class="modal-header" style="background: white; padding: 20px 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+                <h3 class="modal-title" style="margin: 0; font-size: 1.25rem;">Chấm bài</h3>
+                <button onclick="closeGradingModal()" style="background: none; border: none; cursor: pointer; color: #64748b;">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <div style="padding: 24px; overflow-y: auto;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 24px;">
+                    <div>
+                        <p style="margin: 0 0 4px 0; font-size: 0.8rem; color: #64748b;">Học sinh</p>
+                        <p style="margin: 0; font-weight: 600; color: #1e293b;" id="g-student-name">Nguyễn Văn An</p>
+                        <p style="margin: 0; font-size: 0.85rem; color: #64748b;" id="g-student-id">HS001</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 4px 0; font-size: 0.8rem; color: #64748b;">Trạng thái nộp</p>
+                        <span class="badge" id="g-status-badge">Đã nộp</span>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="margin: 0 0 4px 0; font-size: 0.8rem; color: #64748b;">Thời gian nộp</p>
+                        <p style="margin: 0; font-weight: 500; color: #1e293b;" id="g-submit-time">24/07/2026 14:30</p>
+                    </div>
+                </div>
+
+                <div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+                    <h4 style="margin: 0 0 12px 0; font-size: 0.95rem; color: #1e293b;">Nội dung bài làm</h4>
+                    <p id="g-work-content" style="font-size: 0.95rem; color: #334155; line-height: 1.6; margin-bottom: 16px;">Em thưa cô, đây là bài làm của em ạ.</p>
+                    
+                    <div id="g-files-container" style="display: flex; flex-direction: column; gap: 8px;">
+                        <!-- Files injected by JS -->
+                    </div>
+                </div>
+
+                <div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px;">
+                    <div class="form-group">
+                        <label class="form-label required">Điểm số (0-10)</label>
+                        <input type="number" class="form-control" id="g-score" min="0" max="10" step="0.25" style="width: 150px; font-size: 1.25rem; font-weight: 600; color: #3b82f6;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Nhận xét của giáo viên</label>
+                        <textarea class="form-control" id="g-comment" rows="4" placeholder="Nhập lời phê..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-actions" style="background: white; padding: 16px 24px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 12px;">
+                <button type="button" class="btn btn-outline" onclick="closeGradingModal()">Hủy</button>
+                <button type="button" class="btn btn-primary" onclick="saveGrading()">Lưu kết quả chấm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="../js/assignment_detail.js"></script>
+</body>
+</html>
+

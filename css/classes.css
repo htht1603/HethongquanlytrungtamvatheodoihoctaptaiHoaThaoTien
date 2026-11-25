@@ -1,0 +1,233 @@
+/* --- Specific styles for Classes Management --- */
+
+/* View Switcher */
+.view-container {
+    display: none;
+    height: 100%;
+}
+.view-container.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Stat Cards for Classes */
+.class-stat-icon.blue { background-color: #e0f2fe; color: #0284c7; }
+.class-stat-icon.green { background-color: #dcfce7; color: #16a34a; }
+.class-stat-icon.orange { background-color: #ffedd5; color: #ea580c; }
+
+/* Status Badges */
+.class-badge {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+}
+.class-badge-open { background-color: #dcfce7; color: #16a34a; }
+.class-badge-closed { background-color: #fee2e2; color: #dc2626; }
+.class-badge-ended { background-color: #f1f5f9; color: #64748b; }
+
+/* Form Radio Group Custom */
+.radio-group-boxes {
+    display: flex;
+    gap: 16px;
+}
+.radio-box {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s;
+    background: white;
+}
+.radio-box:hover {
+    background: #f8fafc;
+}
+.radio-box input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary-color);
+}
+.radio-box.active {
+    border-color: var(--primary-color);
+    background: #eff6ff;
+}
+
+/* Note Box Sidebar */
+.note-box {
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 24px;
+    height: 100%;
+}
+.note-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 16px;
+}
+.note-title svg { color: var(--primary-color); }
+.note-list {
+    margin: 0;
+    padding-left: 20px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+.note-list li { margin-bottom: 8px; }
+
+/* Schedule Table */
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.schedule-table th, .schedule-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+.schedule-table select, .schedule-table input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+}
+
+/* Error Banner */
+.alert-error {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+.alert-icon {
+    background: #dc2626;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.alert-text strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+.alert-text p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #ef4444;
+}
+.alert-action {
+    margin-left: auto;
+}
+
+/* Class Info Header for Add Student View */
+.class-info-header {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+.class-info-stats {
+    display: flex;
+    gap: 32px;
+}
+.c-stat-item {
+    display: flex;
+    flex-direction: column;
+}
+.c-stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+.c-stat-val {
+    font-weight: 600;
+    font-size: 1rem;
+}
+.c-stat-val.highlight {
+    color: var(--primary-color);
+}
+
+/* Steps Indicator for Remove View */
+.steps-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+.step-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+.step-item.active {
+    color: var(--primary-color);
+}
+.step-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+}
+.step-item.active .step-num {
+    background: var(--primary-color);
+    color: white;
+}
+.step-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--border-color);
+}
+
+/* Selected Class Card */
+.selected-class-card {
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+.sc-icon {
+    width: 40px;
+    height: 40px;
+    background: #e0f2fe;
+    color: #0284c7;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

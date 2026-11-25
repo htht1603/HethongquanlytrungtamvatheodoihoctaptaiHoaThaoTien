@@ -1,0 +1,224 @@
+/* --- Specific styles for Tuition Management --- */
+
+/* Revenue Stat Cards */
+.stat-card.revenue-primary {
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    color: white;
+    border: none;
+}
+.stat-card.revenue-primary .stat-title,
+.stat-card.revenue-primary .stat-value {
+    color: white;
+}
+.stat-card.revenue-primary .stat-icon {
+    background-color: rgba(255,255,255,0.2);
+    color: white;
+}
+
+.stat-card.revenue-outline {
+    background-color: #fff;
+    border: 1px solid #f59e0b;
+}
+.stat-card.revenue-outline .stat-title {
+    color: var(--text-muted);
+}
+.stat-card.revenue-outline .stat-value {
+    color: #f59e0b;
+}
+.stat-card.revenue-outline .stat-icon {
+    background-color: #fef3c7;
+    color: #f59e0b;
+}
+
+/* Checkbox specific styles */
+.checkbox-cell {
+    width: 40px;
+    text-align: center;
+}
+input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+
+/* Status Colors for Fees */
+.text-green { color: #10b981; font-weight: 500; }
+.text-blue { color: #3b82f6; font-weight: 500; }
+.text-red { color: #ef4444; font-weight: 600; }
+.text-grey { color: var(--text-muted); }
+
+/* Fee Status Badges */
+.fee-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.fee-badge-success { background-color: #dcfce7; color: #16a34a; }
+.fee-badge-partial { background-color: #e0f2fe; color: #0284c7; }
+.fee-badge-unpaid { background-color: #f1f5f9; color: #64748b; }
+.fee-badge-overdue { background-color: #fee2e2; color: #dc2626; }
+
+/* Modal specific for Payment */
+.payment-blocks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+.pay-block {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+.pay-block.highlight {
+    border-color: #fca5a5;
+    background: #fff;
+}
+.pay-block-title {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+.pay-block-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+.pay-block-value.text-green { color: #16a34a; }
+.pay-block-value.text-red { color: #dc2626; }
+
+.section-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 20px 0 12px 0;
+    letter-spacing: 0.5px;
+}
+
+.absence-card {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+}
+.absence-header {
+    margin-bottom: 16px;
+}
+.absence-header strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+.absence-header span { color: var(--text-muted); font-size: 0.85rem; }
+
+.absence-stats {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+.abs-stat {
+    flex: 1;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.abs-stat-present { background: #f8fafc; color: var(--text-main); border: 1px solid var(--border-color); }
+.abs-stat-allowed { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+.abs-stat-unallowed { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+
+.abs-stat span { display: block; font-size: 1.25rem; font-weight: 700; margin-top: 4px; }
+
+.discount-input-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+}
+.discount-input-group input {
+    width: 60px;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+}
+
+/* Modal specific for Reminder */
+.reminder-list {
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 24px;
+}
+.reminder-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+.reminder-item:last-child { border-bottom: none; }
+.rem-info strong { display: block; margin-bottom: 4px; font-size: 0.95rem; }
+.rem-info span { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2px; }
+.rem-info .rem-debt { color: #dc2626; font-weight: 600; }
+
+.channel-options {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 8px 16px;
+}
+.channel-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.channel-option:last-child { border-bottom: none; }
+.channel-option label { cursor: pointer; font-size: 0.95rem; font-weight: 500; margin: 0; }
+
+/* Right Panel specific */
+.invoice-detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--border-color);
+    font-size: 0.9rem;
+}
+.invoice-detail-item strong { font-weight: 500; }
+.invoice-summary {
+    background: #f8fafc;
+    padding: 16px;
+    border-radius: 8px;
+    margin-top: 16px;
+}
+.invoice-summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+.invoice-summary-item.total {
+    border-top: 1px solid var(--border-color);
+    padding-top: 12px;
+    margin-top: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #dc2626;
+}
+.history-item {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.history-item:last-child { border-bottom: none; }
+.history-top { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.history-date { font-size: 0.85rem; color: var(--text-muted); }
+.history-amount { font-weight: 600; color: #16a34a; }
+.history-method { font-size: 0.85rem; color: var(--text-main); }

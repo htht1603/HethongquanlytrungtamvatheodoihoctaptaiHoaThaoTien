@@ -1,0 +1,310 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - Hoa Thảo Tiên</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f8fafc; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* TOP BAR */
+    .top-bar { background: white; border-bottom: 1px solid #f1f5f9; padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; }
+    .top-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .top-logo-icon { width: 34px; height: 34px; border-radius: 8px; background: #1e3a8a; display: flex; align-items: center; justify-content: center; }
+    .top-logo-text { font-size: 1rem; font-weight: 800; color: #1e3a8a; }
+    .back-link { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 600; color: #64748b; text-decoration: none; transition: color .15s; }
+    .back-link:hover { color: #1e3a8a; }
+    .back-link svg { width: 16px; height: 16px; }
+
+    /* MAIN */
+    .login-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 24px; }
+    .login-card { background: white; border-radius: 20px; border: 1px solid #e2e8f0; box-shadow: 0 20px 60px rgba(0,0,0,.08); overflow: hidden; display: flex; width: 820px; max-width: 100%; min-height: 540px; }
+
+    /* LEFT BANNER */
+    .login-banner { flex: 1; background: linear-gradient(145deg, #1e3a8a, #1e40af); position: relative; overflow: hidden; padding: 36px; display: flex; flex-direction: column; justify-content: flex-end; min-width: 0; }
+    .banner-circles { position: absolute; inset: 0; overflow: hidden; }
+    .banner-circles::before { content:''; position: absolute; width: 300px; height: 300px; border-radius: 50%; border: 1px solid rgba(255,255,255,.1); top: -80px; left: -80px; }
+    .banner-circles::after  { content:''; position: absolute; width: 200px; height: 200px; border-radius: 50%; border: 1px solid rgba(255,255,255,.08); bottom: 60px; right: -50px; }
+    .banner-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,.15); color: white; font-size: 0.75rem; font-weight: 700; padding: 6px 12px; border-radius: 20px; margin-bottom: 16px; width: fit-content; }
+    .banner-tag span { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; display: block; }
+    .banner-title { font-size: 1.55rem; font-weight: 800; color: white; line-height: 1.3; margin-bottom: 12px; }
+    .banner-desc { font-size: 0.88rem; color: rgba(255,255,255,.75); line-height: 1.6; margin-bottom: 28px; }
+    .banner-avatars { display: flex; align-items: center; gap: 12px; }
+    .avatar-stack { display: flex; }
+    .avatar-stack img { width: 34px; height: 34px; border-radius: 50%; border: 2px solid white; margin-left: -8px; }
+    .avatar-stack img:first-child { margin-left: 0; }
+    .avatar-label { font-size: 0.8rem; color: rgba(255,255,255,.8); font-weight: 600; }
+
+    /* RIGHT FORM */
+    .login-form-side { width: 360px; flex-shrink: 0; padding: 40px 36px; display: flex; flex-direction: column; }
+    .form-logo { width: 52px; height: 52px; border-radius: 14px; background: #eff6ff; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
+    .form-logo svg { width: 28px; height: 28px; }
+    .form-title { font-size: 1.2rem; font-weight: 800; color: #0f172a; text-align: center; margin-bottom: 4px; }
+    .form-subtitle { font-size: 0.82rem; color: #64748b; text-align: center; margin-bottom: 28px; }
+
+    .form-group { margin-bottom: 18px; }
+    .form-label { font-size: 0.8rem; font-weight: 700; color: #334155; display: block; margin-bottom: 6px; }
+    .input-wrap { position: relative; display: flex; align-items: center; }
+    .input-icon { position: absolute; left: 12px; color: #94a3b8; display: flex; align-items: center; }
+    .input-icon svg { width: 16px; height: 16px; }
+    .form-input { width: 100%; padding: 11px 12px 11px 38px; border: 1.5px solid #e2e8f0; border-radius: 10px; font-size: 0.9rem; font-family: inherit; color: #1e293b; outline: none; transition: border .2s; background: #fafbfd; }
+    .form-input:focus { border-color: #3b82f6; background: white; }
+    .form-input.error { border-color: #ef4444; }
+    .label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .forgot-link { font-size: 0.78rem; font-weight: 600; color: #3b82f6; text-decoration: none; }
+    .forgot-link:hover { color: #1d4ed8; }
+    .toggle-pw { position: absolute; right: 12px; background: none; border: none; cursor: pointer; color: #94a3b8; display: flex; padding: 0; }
+    .toggle-pw:hover { color: #64748b; }
+    .toggle-pw svg { width: 18px; height: 18px; }
+
+    .remember-row { display: flex; align-items: center; gap: 8px; margin-bottom: 22px; }
+    .remember-row input { width: 16px; height: 16px; cursor: pointer; }
+    .remember-row label { font-size: 0.82rem; color: #64748b; cursor: pointer; }
+
+    .error-msg { display: none; background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 10px 14px; font-size: 0.82rem; color: #dc2626; font-weight: 600; margin-bottom: 18px; align-items: center; gap: 8px; }
+    .error-msg.show { display: flex; }
+    .error-msg svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    .btn-login { width: 100%; padding: 12px; background: linear-gradient(135deg, #1e3a8a, #1e40af); color: white; border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 700; cursor: pointer; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 9px; transition: all .2s; box-shadow: 0 4px 14px rgba(30,58,138,.3); margin-bottom: 12px; }
+    .btn-login:hover { background: linear-gradient(135deg,#1e40af,#1d4ed8); box-shadow: 0 6px 20px rgba(30,58,138,.4); transform: translateY(-1px); }
+    .btn-login svg { width: 18px; height: 18px; }
+    .btn-ai { width: 100%; padding: 11px; background: white; color: #334155; border: 1.5px solid #e2e8f0; border-radius: 10px; font-size: 0.88rem; font-weight: 600; cursor: pointer; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all .2s; text-decoration: none; }
+    .btn-ai:hover { border-color: #1e3a8a; color: #1e3a8a; background: #f8fbff; }
+    .btn-ai svg { width: 18px; height: 18px; color: #3b82f6; }
+
+    .form-footer { text-align: center; margin-top: 24px; border-top: 1px solid #f1f5f9; padding-top: 18px; }
+    .form-footer p { font-size: 0.75rem; color: #94a3b8; line-height: 1.6; }
+    .form-footer a { color: #64748b; text-decoration: none; margin: 0 6px; font-size: 0.75rem; }
+    .form-footer a:hover { color: #1e3a8a; }
+
+    /* Forgot password overlay */
+    .forgot-overlay { display: none; flex-direction: column; }
+    .forgot-overlay.show { display: flex; }
+    .forgot-step { display: none; flex-direction: column; gap: 16px; }
+    .forgot-step.active { display: flex; }
+    .step-title { font-size: 1.05rem; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+    .step-desc { font-size: 0.85rem; color: #64748b; line-height: 1.5; }
+    .back-btn { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: #64748b; background: none; border: none; cursor: pointer; font-family: inherit; margin-bottom: 8px; }
+    .back-btn:hover { color: #1e3a8a; }
+    .otp-row { display: flex; gap: 10px; }
+    .otp-input { flex: 1; padding: 14px; text-align: center; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1.1rem; font-weight: 700; color: #1e293b; outline: none; }
+    .otp-input:focus { border-color: #3b82f6; }
+    .resend-link { font-size: 0.8rem; color: #3b82f6; font-weight: 600; text-align: center; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+    <a href="guest/guest.html" class="top-logo">
+        <div class="top-logo-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" fill="white"/><path d="M12 15L8.47 16.85L9.14 12.93L6.29 10.15L10.23 9.57L12 6L13.77 9.57L17.71 10.15L14.86 12.93L15.53 16.85L12 15Z" fill="#1e3a8a"/></svg>
+        </div>
+        <span class="top-logo-text">Hoa Thảo Tiên</span>
+    </a>
+    <a href="guest/guest.html" class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        Quay lại trang chủ
+    </a>
+</div>
+
+<!-- LOGIN WRAPPER -->
+<div class="login-wrapper">
+    <div class="login-card">
+
+        <!-- LEFT BANNER -->
+        <div class="login-banner">
+            <div class="banner-circles"></div>
+            <div style="position:relative; z-index:1;">
+                <div class="banner-tag"><span></span> Hơn 10.000 tin dùng</div>
+                <h2 class="banner-title">Ươm mầm tài năng Việt</h2>
+                <p class="banner-desc">Hệ thống quản lý giáo dục hiện đại, tinh gọn và minh bạch dành cho nhà trường, phụ huynh và học sinh.</p>
+                <div class="banner-avatars">
+                    <div class="avatar-stack">
+                        <img src="https://ui-avatars.com/api/?name=A&background=dbeafe&color=1e40af&size=34" alt="">
+                        <img src="https://ui-avatars.com/api/?name=B&background=dcfce7&color=166534&size=34" alt="">
+                        <img src="https://ui-avatars.com/api/?name=C&background=ede9fe&color=6d28d9&size=34" alt="">
+                    </div>
+                    <span class="avatar-label">+10.000 phụ huynh và giáo viên đã tin dùng</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT FORM -->
+        <div class="login-form-side">
+            <!-- Login form -->
+            <div id="login-view">
+                <div class="form-logo">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" fill="#1e3a8a"/><path d="M12 15L8.47 16.85L9.14 12.93L6.29 10.15L10.23 9.57L12 6L13.77 9.57L17.71 10.15L14.86 12.93L15.53 16.85L12 15Z" fill="white"/></svg>
+                </div>
+                <div class="form-title">Hoa Thảo Tiên</div>
+                <div class="form-subtitle">Hệ thống quản lý giáo dục</div>
+
+                <div class="error-msg" id="error-msg">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    <span id="error-text">Tên đăng nhập hoặc mật khẩu không đúng.</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email hoặc Số điện thoại</label>
+                    <div class="input-wrap">
+                        <div class="input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
+                        <input type="text" id="username" class="form-input" placeholder="Nhập email hoặc số điện thoại">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label-row">
+                        <label class="form-label" style="margin-bottom:0;">Mật khẩu</label>
+                        <a href="#" class="forgot-link" onclick="showForgot(); return false;">Quên mật khẩu?</a>
+                    </div>
+                    <div class="input-wrap">
+                        <div class="input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
+                        <input type="password" id="password" class="form-input" placeholder="••••••••">
+                        <button class="toggle-pw" id="toggle-pw">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="remember-row">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Duy trì đăng nhập</label>
+                </div>
+
+                <button class="btn-login" id="btn-login">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                    Đăng nhập
+                </button>
+                <a href="guest/ai_advisor.html" class="btn-ai">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    Tư vấn AI miễn phí
+                </a>
+
+                <div class="form-footer">
+                    <p>© 2026 Trung tâm Hoa Thảo Tiên. Tất cả quyền được bảo lưu.</p>
+                    <a href="#">Điều khoản</a>
+                    <a href="#">Bảo mật</a>
+                    <a href="#">Liên hệ hỗ trợ</a>
+                </div>
+            </div>
+
+            <!-- Forgot password -->
+            <div id="forgot-view" class="forgot-overlay">
+                <!-- Step 1: Enter phone -->
+                <div class="forgot-step active" id="step-phone">
+                    <button class="back-btn" onclick="showLogin()">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        Quay lại đăng nhập
+                    </button>
+                    <div>
+                        <div class="step-title">Quên mật khẩu?</div>
+                        <div class="step-desc">Nhập số điện thoại đã đăng ký. Chúng tôi sẽ gửi mã OTP để xác nhận.</div>
+                    </div>
+                    <div class="input-wrap">
+                        <div class="input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.26 2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.16 6.16l.98-.98a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
+                        <input type="tel" class="form-input" id="phone-input" placeholder="Nhập số điện thoại">
+                    </div>
+                    <button class="btn-login" onclick="sendOTP()">Lấy lại mật khẩu</button>
+                </div>
+
+                <!-- Step 2: OTP -->
+                <div class="forgot-step" id="step-otp">
+                    <button class="back-btn" onclick="showStep('phone')">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        Quay lại
+                    </button>
+                    <div>
+                        <div class="step-title">Nhập mã OTP</div>
+                        <div class="step-desc">Chúng tôi đã gửi mã 6 chữ số đến số điện thoại <strong id="otp-phone"></strong></div>
+                    </div>
+                    <div class="otp-row">
+                        <input type="text" class="otp-input" maxlength="1" oninput="otpNext(this,1)">
+                        <input type="text" class="otp-input" maxlength="1" oninput="otpNext(this,2)">
+                        <input type="text" class="otp-input" maxlength="1" oninput="otpNext(this,3)">
+                        <input type="text" class="otp-input" maxlength="1" oninput="otpNext(this,4)">
+                        <input type="text" class="otp-input" maxlength="1" oninput="otpNext(this,5)">
+                        <input type="text" class="otp-input" maxlength="1" oninput="otpNext(this,6)">
+                    </div>
+                    <p class="resend-link">Chưa nhận được mã? <a href="#" onclick="return false;">Gửi lại</a></p>
+                    <button class="btn-login" onclick="verifyOTP()">Xác nhận OTP</button>
+                </div>
+
+                <!-- Step 3: New Password -->
+                <div class="forgot-step" id="step-newpw">
+                    <div>
+                        <div class="step-title">Đặt mật khẩu mới</div>
+                        <div class="step-desc">Nhập mật khẩu mới cho tài khoản của bạn.</div>
+                    </div>
+                    <div class="input-wrap">
+                        <div class="input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
+                        <input type="password" class="form-input" id="new-pw" placeholder="Mật khẩu mới">
+                    </div>
+                    <div class="input-wrap">
+                        <div class="input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
+                        <input type="password" class="form-input" id="confirm-pw" placeholder="Xác nhận mật khẩu">
+                    </div>
+                    <button class="btn-login" onclick="resetPassword()">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// LOGIN
+document.getElementById('btn-login').addEventListener('click', function() {
+    const u = document.getElementById('username').value.toLowerCase().trim();
+    const p = document.getElementById('password').value;
+    const err = document.getElementById('error-msg');
+    err.classList.remove('show');
+    if (!u) { err.classList.add('show'); document.getElementById('error-text').textContent = 'Vui lòng nhập đầy đủ thông tin.'; return; }
+    if (u === 'teacher') { window.location.href = 'teacher/teacher_dashboard.html'; }
+    else if (u === 'parent') { window.location.href = 'parent/parent_dashboard.html'; }
+    else if (u === 'admin') { window.location.href = 'admin/dashboard.html'; }
+    else { err.classList.add('show'); document.getElementById('error-text').textContent = 'Tên đăng nhập hoặc mật khẩu không đúng.'; }
+});
+
+// Toggle PW
+document.getElementById('toggle-pw').addEventListener('click', function() {
+    const inp = document.getElementById('password');
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+});
+
+// Enter key
+document.getElementById('password').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('btn-login').click(); });
+
+// FORGOT PASSWORD
+function showForgot() { document.getElementById('login-view').style.display='none'; document.getElementById('forgot-view').classList.add('show'); }
+function showLogin() { document.getElementById('login-view').style.display=''; document.getElementById('forgot-view').classList.remove('show'); }
+function showStep(s) {
+    document.querySelectorAll('.forgot-step').forEach(el => el.classList.remove('active'));
+    document.getElementById('step-' + s).classList.add('active');
+}
+function sendOTP() {
+    const ph = document.getElementById('phone-input').value.trim();
+    if (!ph) { alert('Vui lòng nhập số điện thoại!'); return; }
+    document.getElementById('otp-phone').textContent = ph;
+    showStep('otp');
+}
+function otpNext(el, idx) {
+    if (el.value.length === 1 && idx < 6) {
+        document.querySelectorAll('.otp-input')[idx].focus();
+    }
+}
+function verifyOTP() { showStep('newpw'); }
+function resetPassword() {
+    const p1 = document.getElementById('new-pw').value;
+    const p2 = document.getElementById('confirm-pw').value;
+    if (!p1 || p1 !== p2) { alert('Mật khẩu không khớp!'); return; }
+    alert('Đổi mật khẩu thành công!');
+    showLogin();
+}
+</script>
+</body>
+</html>
+

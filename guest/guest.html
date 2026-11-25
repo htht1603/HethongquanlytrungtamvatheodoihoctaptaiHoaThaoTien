@@ -1,0 +1,421 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoa Thảo Tiên - Trung tâm Giáo dục</title>
+    <meta name="description" content="Trung tâm Hoa Thảo Tiên đồng hành cùng học sinh trên hành trình chinh phục tri thức.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: #1e293b; background: #fff; overflow-x: hidden; }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+        position: sticky; top: 0; z-index: 100;
+        background: rgba(255,255,255,.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid #f1f5f9;
+        padding: 0 64px;
+        display: flex; align-items: center;
+        height: 64px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-icon { width: 36px; height: 36px; border-radius: 9px; background: #1e3a8a; display: flex; align-items: center; justify-content: center; }
+    .nav-logo-text { line-height: 1.2; }
+    .nav-logo-text .brand { font-size: 0.92rem; font-weight: 800; color: #1e3a8a; }
+    .nav-logo-text .sub  { font-size: 0.65rem; color: #64748b; font-weight: 500; }
+    .nav-links { display: flex; align-items: center; gap: 6px; margin: 0 auto; }
+    .nav-link { padding: 8px 16px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; color: #334155; text-decoration: none; transition: all .2s; position: relative; }
+    .nav-link:hover { color: #1e3a8a; background: #f0f4f8; }
+    .nav-link.active { color: #1e3a8a; }
+    .nav-link.active::after { content:''; position: absolute; bottom:-2px; left:50%; transform:translateX(-50%); width:24px; height:2px; background:#1e3a8a; border-radius:2px; }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .btn-login { padding: 9px 22px; border-radius: 9px; background: #1e3a8a; color: white; font-size: 0.88rem; font-weight: 700; text-decoration: none; border: none; cursor: pointer; transition: all .2s; }
+    .btn-login:hover { background: #1e40af; box-shadow: 0 4px 14px rgba(30,58,138,.3); transform: translateY(-1px); }
+
+    /* ===== HERO ===== */
+    .hero {
+        padding: 80px 64px 72px;
+        display: grid; grid-template-columns: 1fr 360px; gap: 60px; align-items: start;
+        background: linear-gradient(145deg, #f8fbff 0%, #ffffff 100%);
+    }
+    .hero-left {}
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: #eff6ff; color: #1e40af; font-size: 0.8rem; font-weight: 700; padding: 6px 14px; border-radius: 20px; margin-bottom: 22px; }
+    .hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; display: block; }
+    .hero-title { font-size: 3.2rem; font-weight: 900; color: #0f172a; line-height: 1.08; letter-spacing: -1.5px; margin-bottom: 18px; }
+    .hero-title span { color: #1e3a8a; }
+    .hero-desc { font-size: 1.05rem; color: #64748b; line-height: 1.7; max-width: 480px; margin-bottom: 36px; }
+    .hero-cta { display: flex; gap: 14px; margin-bottom: 50px; }
+    .btn-primary-lg { display: flex; align-items: center; gap: 9px; padding: 14px 28px; background: #1e3a8a; color: white; border-radius: 12px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all .2s; box-shadow: 0 6px 20px rgba(30,58,138,.25); }
+    .btn-primary-lg:hover { background: #1e40af; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(30,58,138,.35); }
+    .btn-primary-lg svg { width: 18px; height: 18px; }
+    .btn-outline-lg { display: flex; align-items: center; gap: 9px; padding: 14px 24px; background: white; color: #334155; border-radius: 12px; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all .2s; border: 2px solid #e2e8f0; }
+    .btn-outline-lg:hover { border-color: #1e3a8a; color: #1e3a8a; transform: translateY(-1px); }
+    .btn-outline-lg svg { width: 18px; height: 18px; }
+    .hero-badges { display: flex; gap: 16px; }
+    .hero-feat { display: flex; align-items: center; gap: 10px; background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 16px; box-shadow: 0 2px 8px rgba(0,0,0,.05); }
+    .hero-feat-icon { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .hero-feat-icon svg { width: 18px; height: 18px; }
+    .hero-feat-text { font-size: 0.8rem; font-weight: 600; color: #334155; line-height: 1.3; }
+
+    /* STATS */
+    .stats-strip { display: flex; align-items: center; gap: 0; border-top: 1px solid #f1f5f9; padding: 28px 64px; background: white; }
+    .stat-item { flex: 1; text-align: center; }
+    .stat-item + .stat-item { border-left: 1px solid #f1f5f9; }
+    .stat-num { font-size: 1.9rem; font-weight: 900; color: #1e3a8a; margin-bottom: 4px; }
+    .stat-lbl { font-size: 0.82rem; color: #64748b; font-weight: 500; }
+
+    /* ===== MAIN GRID (Classes + Notifications) ===== */
+    .main-grid { display: grid; grid-template-columns: 1fr 320px; gap: 40px; padding: 56px 64px; }
+
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+    .section-title { font-size: 1.3rem; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 10px; }
+    .section-title svg { width: 22px; height: 22px; color: #1e3a8a; }
+    .section-link { font-size: 0.88rem; font-weight: 600; color: #3b82f6; text-decoration: none; display: flex; align-items: center; gap: 5px; }
+    .section-link:hover { color: #1d4ed8; }
+
+    /* CLASS CARDS */
+    .class-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .class-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; transition: all .2s; }
+    .class-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,.09); transform: translateY(-3px); border-color: #cbd5e1; }
+    .cc-top { padding: 18px 20px 14px; }
+    .cc-tag-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .cc-tag { font-size: 0.72rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
+    .tag-blue { background: #dbeafe; color: #1e40af; }
+    .tag-green { background: #dcfce7; color: #16a34a; }
+    .tag-orange { background: #ffedd5; color: #c2410c; }
+    .tag-purple { background: #ede9fe; color: #6d28d9; }
+    .cc-slots { font-size: 0.72rem; color: #94a3b8; font-weight: 600; }
+    .cc-name { font-size: 1.05rem; font-weight: 800; color: #0f172a; margin-bottom: 12px; }
+    .cc-teacher { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+    .cc-avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #1d4ed8); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.72rem; font-weight: 700; flex-shrink: 0; }
+    .cc-teacher-name { font-size: 0.82rem; color: #64748b; font-weight: 600; }
+    .cc-schedule { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+    .cc-schedule-item { display: flex; align-items: center; gap: 5px; font-size: 0.78rem; color: #64748b; }
+    .cc-schedule-item svg { width: 13px; height: 13px; color: #94a3b8; }
+    .cc-days { display: flex; gap: 4px; margin-bottom: 12px; }
+    .day-chip { width: 26px; height: 26px; border-radius: 50%; background: #f1f5f9; color: #334155; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .day-chip.active { background: #1e3a8a; color: white; }
+    .cc-bottom { padding: 14px 20px; border-top: 1px solid #f8fafc; background: #fafbff; display: flex; align-items: center; justify-content: space-between; }
+    .cc-price { font-size: 0.95rem; font-weight: 800; color: #1e3a8a; }
+    .cc-price span { font-size: 0.72rem; font-weight: 500; color: #94a3b8; }
+    .btn-detail { font-size: 0.8rem; font-weight: 600; color: #3b82f6; text-decoration: none; background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: color .15s; }
+    .btn-detail:hover { color: #1d4ed8; }
+    .cc-view-all { text-align: center; padding-top: 20px; }
+    .btn-view-all { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 0.9rem; font-weight: 700; color: #334155; text-decoration: none; transition: all .2s; }
+    .btn-view-all:hover { border-color: #1e3a8a; color: #1e3a8a; background: #f8fbff; }
+
+    /* NOTIFICATIONS SIDEBAR */
+    .notif-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.04); }
+    .notif-item { display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid #f8fafc; cursor: pointer; transition: background .15s; }
+    .notif-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .notif-item:hover { opacity: .8; }
+    .ni-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ni-icon svg { width: 18px; height: 18px; }
+    .ni-body {}
+    .ni-time { font-size: 0.72rem; color: #94a3b8; font-weight: 500; margin-bottom: 4px; }
+    .ni-title { font-size: 0.88rem; font-weight: 700; color: #1e293b; margin-bottom: 4px; line-height: 1.3; }
+    .ni-desc { font-size: 0.78rem; color: #64748b; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+    /* AI FAB */
+    .ai-fab {
+        position: fixed; bottom: 28px; right: 28px;
+        display: flex; align-items: center; gap: 10px;
+        background: #1e3a8a; color: white;
+        padding: 12px 20px; border-radius: 50px;
+        box-shadow: 0 8px 24px rgba(30,58,138,.35);
+        cursor: pointer; text-decoration: none;
+        font-size: 0.88rem; font-weight: 700;
+        transition: all .2s;
+    }
+    .ai-fab:hover { background: #1e40af; transform: translateY(-2px); box-shadow: 0 12px 32px rgba(30,58,138,.4); }
+    .ai-fab svg { width: 20px; height: 20px; }
+
+    /* FOOTER */
+    footer { background: #0f172a; color: rgba(255,255,255,.6); padding: 24px 64px; text-align: center; font-size: 0.82rem; }
+    footer a { color: rgba(255,255,255,.5); text-decoration: none; margin: 0 12px; }
+    footer a:hover { color: white; }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <a href="guest.html" class="nav-logo">
+        <div class="nav-logo-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" fill="white"/><path d="M12 15L8.47 16.85L9.14 12.93L6.29 10.15L10.23 9.57L12 6L13.77 9.57L17.71 10.15L14.86 12.93L15.53 16.85L12 15Z" fill="#1e3a8a"/></svg>
+        </div>
+        <div class="nav-logo-text">
+            <div class="brand">HOA THẢO TIÊN</div>
+            <div class="sub">TRUNG TÂM GIÁO DỤC</div>
+        </div>
+    </a>
+    <div class="nav-links">
+        <a href="guest.html" class="nav-link active">Trang chủ</a>
+        <a href="#about" class="nav-link">Giới thiệu</a>
+        <a href="guest_classes.html" class="nav-link">Lớp học</a>
+        <a href="#news" class="nav-link">Tin tức</a>
+        <a href="#contact" class="nav-link">Liên hệ</a>
+    </div>
+    <div class="nav-actions">
+        <a href="../login.html" class="btn-login">Đăng nhập</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-left">
+        <div class="hero-badge"><span></span> Tuyển sinh tháng 8/2026 đang mở</div>
+        <h1 class="hero-title">HỌC TẬP HIỆU QUẢ<br><span>KIẾN TẠO TƯƠNG LAI</span></h1>
+        <p class="hero-desc">Trung tâm Hoa Thảo Tiên đồng hành cùng học sinh trên hành trình chinh phục tri thức. Chương trình giảng dạy hiện đại, giáo viên tận tâm, kết quả vượt trội.</p>
+        <div class="hero-cta">
+            <a href="guest_classes.html" class="btn-primary-lg">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                Khám phá lớp học
+            </a>
+            <a href="ai_advisor.html" class="btn-outline-lg">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm0 0v4m0 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path></svg>
+                Tư vấn AI miễn phí
+            </a>
+        </div>
+        <div class="hero-badges">
+            <div class="hero-feat">
+                <div class="hero-feat-icon" style="background:#eff6ff;"><svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
+                <span class="hero-feat-text">Giáo viên<br>chất lượng</span>
+            </div>
+            <div class="hero-feat">
+                <div class="hero-feat-icon" style="background:#f0fdf4;"><svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></div>
+                <span class="hero-feat-text">Chương trình<br>phù hợp</span>
+            </div>
+            <div class="hero-feat">
+                <div class="hero-feat-icon" style="background:#fdf4ff;"><svg viewBox="0 0 24 24" fill="none" stroke="#c026d3" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
+                <span class="hero-feat-text">Theo dõi học tập<br>hiệu quả</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications widget on right side of hero -->
+    <div>
+        <div style="background: white; border-radius: 16px; border: 1px solid #e2e8f0; padding: 20px; box-shadow: 0 8px 28px rgba(0,0,0,.07);">
+            <div class="section-header" style="margin-bottom:16px;">
+                <span style="font-size:0.85rem; font-weight:700; color:#0f172a; display:flex; align-items:center; gap:8px;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#1e3a8a" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> THÔNG BÁO MỚI</span>
+                <a href="#" style="font-size:0.78rem; color:#3b82f6; text-decoration:none; font-weight:600;">Xem thêm</a>
+            </div>
+            <div class="notif-item">
+                <div class="ni-icon" style="background:#fffbeb;"><svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line></svg></div>
+                <div class="ni-body">
+                    <div class="ni-time">28/04/2026</div>
+                    <div class="ni-title">Thông báo lịch nghỉ lễ 30/4 và 01/5</div>
+                    <div class="ni-desc">Trung tâm thông báo lịch nghỉ lễ 30/4 và 01/5...</div>
+                </div>
+            </div>
+            <div class="notif-item">
+                <div class="ni-icon" style="background:#f0fdf4;"><svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg></div>
+                <div class="ni-body">
+                    <div class="ni-time">20/04/2026</div>
+                    <div class="ni-title">Khai giảng lớp Toán nâng cao lớp 9</div>
+                    <div class="ni-desc">Trung tâm khai báo lịch khai giảng dự kiến kỳ tháng 04/2026...</div>
+                </div>
+            </div>
+            <div class="notif-item">
+                <div class="ni-icon" style="background:#eff6ff;"><svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg></div>
+                <div class="ni-body">
+                    <div class="ni-time">15/04/2026</div>
+                    <div class="ni-title">Chương trình ưu đãi tháng 04</div>
+                    <div class="ni-desc">Giảm 10% học phí khi đăng ký từ nay trong tháng...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+    <div class="stat-item"><div class="stat-num">150+</div><div class="stat-lbl">Giáo viên chất lượng</div></div>
+    <div class="stat-item"><div class="stat-num">50+</div><div class="stat-lbl">Lớp học đang mở</div></div>
+    <div class="stat-item"><div class="stat-num">10.000+</div><div class="stat-lbl">Học sinh theo học</div></div>
+    <div class="stat-item"><div class="stat-num">98%</div><div class="stat-lbl">Phụ huynh hài lòng</div></div>
+</div>
+
+<!-- MAIN GRID -->
+<div class="main-grid">
+    <!-- LEFT: Featured Classes -->
+    <div>
+        <div class="section-header">
+            <h2 class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                Lớp học nổi bật
+            </h2>
+        </div>
+
+        <div class="class-grid">
+            <!-- Card 1 -->
+            <div class="class-card">
+                <div class="cc-top">
+                    <div class="cc-tag-row">
+                        <span class="cc-tag tag-blue">Toán Tư thục</span>
+                        <span class="cc-slots">Còn 2</span>
+                    </div>
+                    <div class="cc-name">Toán K8A</div>
+                    <div class="cc-teacher">
+                        <div class="cc-avatar">L</div>
+                        <span class="cc-teacher-name">Nguyễn Thị Lan Anh</span>
+                    </div>
+                    <div class="cc-schedule">
+                        <div class="cc-schedule-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> 17:00 – 18:30</div>
+                    </div>
+                    <div class="cc-days">
+                        <span class="day-chip">T2</span><span class="day-chip active">T3</span><span class="day-chip active">T4</span><span class="day-chip">T5</span><span class="day-chip">T6</span>
+                    </div>
+                </div>
+                <div class="cc-bottom">
+                    <div class="cc-price">1.800.000đ <span>/tháng</span></div>
+                    <a href="guest_class_detail.html" class="btn-detail">Xem chi tiết →</a>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="class-card">
+                <div class="cc-top">
+                    <div class="cc-tag-row">
+                        <span class="cc-tag tag-blue">Toán Tư thục</span>
+                        <span class="cc-slots">Còn 2</span>
+                    </div>
+                    <div class="cc-name">Toán K8A</div>
+                    <div class="cc-teacher">
+                        <div class="cc-avatar">L</div>
+                        <span class="cc-teacher-name">Nguyễn Thị Lan Anh</span>
+                    </div>
+                    <div class="cc-schedule">
+                        <div class="cc-schedule-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> 17:00 – 18:30</div>
+                    </div>
+                    <div class="cc-days">
+                        <span class="day-chip">T2</span><span class="day-chip">T3</span><span class="day-chip active">T4</span><span class="day-chip">T5</span><span class="day-chip active">T6</span>
+                    </div>
+                </div>
+                <div class="cc-bottom">
+                    <div class="cc-price">1.800.000đ <span>/tháng</span></div>
+                    <a href="guest_class_detail.html" class="btn-detail">Xem chi tiết →</a>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="class-card">
+                <div class="cc-top">
+                    <div class="cc-tag-row">
+                        <span class="cc-tag tag-green">Anh Tư thục</span>
+                        <span class="cc-slots" style="color:#ef4444;">Hết chỗ</span>
+                    </div>
+                    <div class="cc-name">Anh K8A</div>
+                    <div class="cc-teacher">
+                        <div class="cc-avatar" style="background:linear-gradient(135deg,#10b981,#059669);">S</div>
+                        <span class="cc-teacher-name">Mr. Smith</span>
+                    </div>
+                    <div class="cc-schedule">
+                        <div class="cc-schedule-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> 14:00 – 16:00</div>
+                    </div>
+                    <div class="cc-days">
+                        <span class="day-chip">T2</span><span class="day-chip active">T3</span><span class="day-chip">T4</span><span class="day-chip active">T5</span><span class="day-chip">T6</span>
+                    </div>
+                </div>
+                <div class="cc-bottom">
+                    <div class="cc-price">2.200.000đ <span>/tháng</span></div>
+                    <a href="guest_class_detail.html" class="btn-detail">Xem chi tiết →</a>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="class-card">
+                <div class="cc-top">
+                    <div class="cc-tag-row">
+                        <span class="cc-tag tag-orange">Lý Tư thục</span>
+                        <span class="cc-slots">Còn 5</span>
+                    </div>
+                    <div class="cc-name">Vật Lý K10C</div>
+                    <div class="cc-teacher">
+                        <div class="cc-avatar" style="background:linear-gradient(135deg,#f97316,#ea580c);">M</div>
+                        <span class="cc-teacher-name">Đặng Minh</span>
+                    </div>
+                    <div class="cc-schedule">
+                        <div class="cc-schedule-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> 09:00 – 11:00</div>
+                    </div>
+                    <div class="cc-days">
+                        <span class="day-chip active">T2</span><span class="day-chip">T3</span><span class="day-chip">T4</span><span class="day-chip active">T5</span><span class="day-chip">T6</span>
+                    </div>
+                </div>
+                <div class="cc-bottom">
+                    <div class="cc-price">1.600.000đ <span>/tháng</span></div>
+                    <a href="guest_class_detail.html" class="btn-detail">Xem chi tiết →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="cc-view-all">
+            <a href="guest_classes.html" class="btn-view-all">Xem tất cả →</a>
+        </div>
+    </div>
+
+    <!-- RIGHT: Notifications -->
+    <div>
+        <div class="section-header">
+            <h2 class="section-title" style="font-size:1.1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                Thông báo mới
+            </h2>
+        </div>
+        <div class="notif-card">
+            <div class="notif-item">
+                <div class="ni-icon" style="background:#fef2f2;"><svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line></svg></div>
+                <div class="ni-body">
+                    <div class="ni-time">28/04/2026</div>
+                    <div class="ni-title">Thông báo lịch nghỉ lễ 30/4 và 01/5</div>
+                    <div class="ni-desc">Trung tâm thông báo lịch nghỉ lễ 30/4 và 01/5...</div>
+                </div>
+            </div>
+            <div class="notif-item">
+                <div class="ni-icon" style="background:#f0fdf4;"><svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg></div>
+                <div class="ni-body">
+                    <div class="ni-time">20/04/2026</div>
+                    <div class="ni-title">Khai giảng lớp Toán nâng cao lớp 9</div>
+                    <div class="ni-desc">Trung tâm khai báo lịch khai giảng dự kiến kỳ tháng 04/2026...</div>
+                </div>
+            </div>
+            <div class="notif-item">
+                <div class="ni-icon" style="background:#eff6ff;"><svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg></div>
+                <div class="ni-body">
+                    <div class="ni-time">15/04/2026</div>
+                    <div class="ni-title">Chương trình ưu đãi tháng 04</div>
+                    <div class="ni-desc">Giảm 10% học phí khi đăng ký trong tháng...</div>
+                </div>
+            </div>
+            <div class="notif-item">
+                <div class="ni-icon" style="background:#fdf4ff;"><svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
+                <div class="ni-body">
+                    <div class="ni-time">10/04/2026</div>
+                    <div class="ni-title">Kết quả thi thử THPT Quốc gia</div>
+                    <div class="ni-desc">Học sinh lớp 12 đã nhận kết quả thi thử...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AI FAB -->
+<a href="ai_advisor.html" class="ai-fab">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    Bạn cần hỗ trợ?<br><small style="font-weight:500; opacity:.8;">Chat với chúng tôi!</small>
+</a>
+
+<footer>
+    <p style="margin-bottom:8px;">© 2026 Trung tâm Hoa Thảo Tiên — Hệ thống Quản lý Giáo dục Hiện đại</p>
+    <a href="#">Điều khoản</a>
+    <a href="#">Bảo mật</a>
+    <a href="#">Liên hệ hỗ trợ</a>
+</footer>
+</body>
+</html>
+
